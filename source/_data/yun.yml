@@ -10,7 +10,7 @@ avatar:
   opacity: 1
   mickey_mouse: false
   status:
-    enable: false
+    enable: true
     emoji: 😊
     message: 永远相信美好的事情即将发生
 
@@ -52,9 +52,19 @@ banner:
   go_down:
     enable: true
     icon: icon-arrow-down-s-line
+
+#公告
 notice:
   enable: true
   content: Thanks for playing my game.
+
+#侧边栏显示标签
+sidebar:
+  bg_image: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-1.jpg
+  bg_position: bottom 3rem center
+  tagcloud:
+    enable: true
+    amount: 20
 
 wordcloud:
   enable: true

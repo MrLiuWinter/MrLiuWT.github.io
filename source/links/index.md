@@ -9,7 +9,7 @@ links:
   - url: https://yunyoujun.cn
     avatar: /images/avatar.jpg
     name: 刘高兴
-    blog: 刘高兴的小P站
+    blog: 刘高兴的小伙伴
     desc: just do it.
     color: "#0078e7" # 代表色
     email: # 非必须
