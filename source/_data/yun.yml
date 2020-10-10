@@ -16,6 +16,19 @@ avatar:
 
 # Social Links.
 social:
+  - name: QQ 群
+    # https://isux.tencent.com/wp-content/uploads/2016/05/20160512101222609.pdf
+    link: /images/QQ.jpg
+    icon: icon-qq-line
+    color: "#12B7F5"
+  - name: 微信公众号
+    link: /images/wechat.png
+    icon: icon-wechat-2-line
+    color: "#1AAD19"
+  - name: E-Mail
+    link: mailto:me@yunyoujun.cn
+    icon: icon-mail-line
+    color: "#8E71C1"
   - name: GitHub
     link: https://github.com/MrLiuWinter  #https://github.com/YunYouJun
     icon: icon-github-line
@@ -52,12 +65,14 @@ banner:
   go_down:
     enable: true
     icon: icon-arrow-down-s-line
+
 bg_image:
   enable: true
-  url: /images/background.jpg
-  # dark:
-  # blur: 30px # 设置背景模糊程度
-  opacity: 0.8
+  url: /images/background.jpg # recomend image related to your mode
+  dark: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/galaxy.jpg
+  # blur: 30px
+  opacity: 1
+  
 #公告
 notice:
   enable: true
@@ -80,7 +95,7 @@ aplayer:
   meting: true
   # https://github.com/metowolf/MetingJS/tree/v1.2#option
   widget:
-    enable: true
+    enable: false
     autoplay: false
     # theme: "#2980b9"
     loop: all
@@ -101,3 +116,7 @@ aplayer:
       id: 885132564 #308168565
       server: netease
       type: playlist
+
+      
+reward:
+  enable: false
