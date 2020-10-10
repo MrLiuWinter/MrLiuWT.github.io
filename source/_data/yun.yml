@@ -88,6 +88,7 @@ sidebar:
 
 wordcloud:
   enable: true
+  height: 350
   
 #播放器
 aplayer:
@@ -95,7 +96,7 @@ aplayer:
   meting: true
   # https://github.com/metowolf/MetingJS/tree/v1.2#option
   widget:
-    enable: false
+    enable: true
     autoplay: false
     # theme: "#2980b9"
     loop: all
@@ -113,10 +114,16 @@ aplayer:
         cover: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-0.jpg
     meting:
       enable: true
-      id: 885132564 #308168565
+      id: 885132564
       server: netease
       type: playlist
-
+pjax:
+  enable: true
+  
+wordcount:
+  enable: true
+  count: true
+  time: true
       
 reward:
   enable: false
