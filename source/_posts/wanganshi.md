@@ -1,9 +1,9 @@
 ---
-title: second
+title: 游褒禅山记
 abbrlink: 55620
 date: 2020-10-09 15:20:28
 tags:
-  - 王安石
+  - 散文
 categories:
   - 古文今赏
 ---
