@@ -5,7 +5,6 @@ tags:
 categories:
   - 数学基础
 abbrlink: 51287
-katex: true
 math: true
 date: 2020-10-25 08:50:01
 ---
