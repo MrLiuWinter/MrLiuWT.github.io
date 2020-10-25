@@ -6,8 +6,6 @@ categories:
   - 数学基础
 abbrlink: 51287
 date: 2020-10-25 08:50:01
-katex: true
-layout:
 ---
 
 # 软阈值公式
