@@ -119,6 +119,10 @@ aplayer:
       type: playlist
 pjax:
   enable: true
+
+katex:
+  copy_tex: true
+  global: true
   
 wordcount:
   enable: true
