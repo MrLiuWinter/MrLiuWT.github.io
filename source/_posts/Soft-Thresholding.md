@@ -11,7 +11,7 @@ date: 2020-10-25 08:50:01
 
 # 软阈值公式
 
-数学公式编辑：(转载）https://www.jianshu.com/p/4460692eece4
+markdown编辑数学公式：(转载）<https://www.jianshu.com/p/4460692eece4>
 
 软阈值函数是指Y=X-T,X≥TX+T,X≤-T0,|X|[小波变换](https://baike.baidu.com/item/小波变换/10334289)的系数,T是预先选定的[阈值](https://baike.baidu.com/item/阈值/7442398)。而阈值的量化采用固定阈值法，其定义为:T=σ2log(N)，这里N为[信号采样](https://baike.baidu.com/item/信号采样/5408307)的数目，σ为噪声的标准偏差。(百度百科)
 

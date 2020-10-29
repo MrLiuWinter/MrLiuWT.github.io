@@ -122,7 +122,7 @@ pjax:
 
 katex:
   copy_tex: true
-  global: false
+  global: true
   
 wordcount:
   enable: true
