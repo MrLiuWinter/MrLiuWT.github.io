@@ -1,0 +1,133 @@
+# custom your assets in head
+# ---------------
+# mode: light | dark | auto | time
+mode: auto
+
+avatar:
+  url: /images/avatar.jpg
+  rounded: true
+  # The value of opacity should be choose from 0 to 1 to set the opacity of the avatar.
+  opacity: 1
+  mickey_mouse: false
+  status:
+    enable: true
+    emoji: 😊
+    message: 永远相信美好的事情即将发生
+
+# Social Links.
+social:
+  - name: QQ 群
+    # https://isux.tencent.com/wp-content/uploads/2016/05/20160512101222609.pdf
+    link: /images/QQ.jpg
+    icon: icon-qq-line
+    color: "#12B7F5"
+  - name: 微信公众号
+    link: /images/wechat.png
+    icon: icon-wechat-2-line
+    color: "#1AAD19"
+  - name: E-Mail
+    link: mailto:me@yunyoujun.cn
+    icon: icon-mail-line
+    color: "#8E71C1"
+  - name: GitHub
+    link: https://github.com/MrLiuWinter  #https://github.com/YunYouJun
+    icon: icon-github-line
+    color: "#6e5494"
+  - name: 微博
+    link: https://weibo.com/5687102559/profile?rightmod=1&wvr=6&mod=personinfo #https://weibo.com/jizhideyunyoujun
+    icon: icon-weibo-line
+    color: "#E6162D"
+  - name: 网易云音乐
+    link: https://music.163.com/#/user/home?id=300764227 #https://music.163.com/#/user/home?id=247102977
+    icon: icon-netease-cloud-music-line
+    color: "#C20C0C"
+  - name: 知乎
+    link: https://www.zhihu.com/people/ge-bi-lao-wang-shi-gu-liang #https://www.zhihu.com/people/yunyoujun/
+    icon: icon-zhihu-line
+    color: "#0084FF"
+  - name: 哔哩哔哩
+    link: https://space.bilibili.com/94897807 #https://space.bilibili.com/1579790
+    icon: icon-bilibili-line
+    color: "#FF8EB3"
+  - name: Travelling
+    link: https://travellings.now.sh/
+    icon: icon-send-plane-2-line
+    color: black
+# UI
+banner:
+  enable: true
+  title: 刘高兴的小P站
+  src: /js/ui/banner.js
+  border: true
+  cloud:
+    enable: true
+    color: "white"
+  go_down:
+    enable: true
+    icon: icon-arrow-down-s-line
+
+bg_image:
+  enable: true
+  url: /images/background.jpg # recomend image related to your mode
+  dark: /images/darkground.jpg 
+  # blur: 30px
+  opacity: 1
+  
+#公告
+notice:
+  enable: true
+  content: 一个有温度的人
+
+#侧边栏显示标签
+sidebar:
+  bg_image: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-1.jpg
+  bg_position: bottom 3rem center
+  tagcloud:
+    enable: true
+    amount: 20
+
+wordcloud:
+  enable: true
+  height: 350
+  
+#播放器
+aplayer:
+  global: true
+  meting: true
+  # https://github.com/metowolf/MetingJS/tree/v1.2#option
+  widget:
+    enable: true
+    autoplay: false
+    # theme: "#2980b9"
+    loop: all
+    order: list
+    preload: auto
+    volume: 0.7
+    mutex: true
+    lrcType: 0
+    listFolded: false
+    listMaxHeight: 340px
+    audio:
+      - name: 星宿计时
+        artist: 杉田朗/洛天依
+        url: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/audio/star-timer.mp3
+        cover: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-0.jpg
+    meting:
+      enable: true
+      id: 885132564
+      server: netease
+      type: playlist
+pjax:
+  enable: true
+
+katex:
+  copy_tex: true
+  global: true
+  
+wordcount:
+  enable: true
+  count: true
+  time: true
+      
+reward:
+  enable: false
