@@ -13,7 +13,21 @@ avatar:
     enable: true
     emoji: 😊
     message: 永远相信美好的事情即将发生
-
+tags:
+  唐诗: "#4fc08d"
+  Hexo: "#0E834D"
+  宋词: "#5298d1"
+  Node.js: "#026E00"
+  Git: "#F14E32"
+  React: "#61dafb"
+  Python: "#3776ab"
+  骈体文: "#8892BF"
+  VS Code: "#0066B8"
+  JavaScript: "#F4DF4F"
+  分享: "#317AC6"
+  散文: "#F4645F"
+categories:
+  古文今赏: dimgray
 # Social Links.
 social:
   - name: QQ 群
