@@ -22,16 +22,14 @@ date: 2020-12-30 11:28:55
 
 标签:
 
- 
-
 [古文观止](https://hanyu.baidu.com/s?ptype=poem_tag&about=古文观止)[议论](https://hanyu.baidu.com/s?ptype=poem_tag&about=议论)[写人](https://hanyu.baidu.com/s?ptype=poem_tag&about=写人)[抒情](https://hanyu.baidu.com/s?ptype=poem_tag&about=抒情)[文言文](https://hanyu.baidu.com/s?ptype=poem_tag&about=文言文)
 
-[**赏析**](javascript:)
+# [**赏析**](javascript:)
 
 苏轼在其人物史论中写了大量的翻案文章，立意新颖深刻，高远幽邃。治国之策，行事之则；爱民之心，嫉恶之恨；他人之思，自我之省，都别出新见，发人之所未见，启人之所未思晁错曾提出“削藩”建议，后被汉景帝所杀。“晁错之死，人多叹息”，苏轼却翻空出奇，以独特的视角，一家之言，阐述了晁错受祸原因，提出了仁人君子、豪杰之士应“出身为天下犯大难，以求成功”的主张。
 文章开篇为泛泛概说：“天下之患，最不可为者，名为治平无事，而其实有不测之忧。”起句看似虚写，实则却在暗说汉景帝时国泰民安中隐含着的诸侯之患。接着，作者便围绕“患”字，从“坐”、... [古诗文网>>](http://so.gushiwen.org/shangxi_27152.aspx)
 
-**作者介绍**
+# **作者介绍**
 
 ![img](https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2668946917,15105938&fm=58) 
 
