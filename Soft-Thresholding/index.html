@@ -1,34 +1,159 @@
-extends _partial/layout.pug
-
-block content
-  - var post = page
-  #post
-    article.post-block(itemscope, itemtype='https://schema.org/Article')
-      include _partial/post/post-schema.pug
-      if post.type
-        - post_type = getPropertyByType(post.type)
-      header.post-header
-        h1.post-title(itemprop='name headline', style=post.type ? `color: ${post_type.color}` : '')
-          if post.type
-            +icon(post_type.icon)
-          | #{post.title}
-
-          if theme.post_edit.enable
-            include _partial/post/post-edit.pug
-
-        include _partial/post/post-meta.pug
-
-        if post.url
-          a.hty-button.hty-button--raised(href=url_for(post.url), style=`margin-top: 1rem;background-color:${post_type.color}`)=__('post.view_link')
-
-      section.post-body(itemprop='articleBody')
-        .post-content.markdown-body(style=`--smc-primary:${theme.colors.primary};`)!=post.content
-
-        if theme.reward.enable && page.reward !== false
-          include _partial/post/reward.pug
-
-        if theme.creative_commons.license && theme.creative_commons.post
-          include _partial/post/post-copyright.pug
-
-    if post.prev || post.next
-      include _partial/post/post-nav.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="刘高兴"><meta name="copyright" content="刘高兴"><meta name="generator" content="Hexo 5.2.0"><meta name="theme" content="hexo-theme-yun"><title>软阈值公式 | 研路漫漫</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.22/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_ed8vp4atwoj.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script><script>document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "\\(", right: "\\)", display: false},
+      {left: "\\[", right: "\\]", display: true}
+    ]
+  });
+});</script><link class="aplayer-style-marker" rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script class="aplayer-script-marker" src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" defer></script><script class="meting-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js" defer></script><script src="/js/pjax.js" defer></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"www.mrliuwinter.com","root":"/","title":"刘高兴的小P站","version":"1.3.0","mode":"auto","copycode":true,"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><meta name="description" content="软阈值公式markdown编辑数学公式：(转载）https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;4460692eece4 软阈值函数是指Y&#x3D;X-T,X≥TX+T,X≤-T0,|X|小波变换的系数,T是预先选定的阈值。而阈值的量化采用固定阈值法，其定义为:T&#x3D;σ2log(N)，这里N为信号采样的数目，σ为噪声的标准偏差。(百度百科) 1、软阈值(Soft Thresholding)函数的符号以下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软阈值公式">
+<meta property="og:url" content="http://www.mrliuwinter.com/Soft-Thresholding/index.html">
+<meta property="og:site_name" content="研路漫漫">
+<meta property="og:description" content="软阈值公式markdown编辑数学公式：(转载）https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;4460692eece4 软阈值函数是指Y&#x3D;X-T,X≥TX+T,X≤-T0,|X|小波变换的系数,T是预先选定的阈值。而阈值的量化采用固定阈值法，其定义为:T&#x3D;σ2log(N)，这里N为信号采样的数目，σ为噪声的标准偏差。(百度百科) 1、软阈值(Soft Thresholding)函数的符号以下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.blog.csdn.net/20160809165935019">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803142929994">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143000495">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143016510">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143028042">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143048448">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143100948">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143124933">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143205402">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143230652">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143241212">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143323199">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143336198">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143355746">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143406042">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803142929994">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143439637">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143452950">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143508356">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803142929994">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/389051/201712/389051-20171203171206351-1917148791.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803142929994">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803142929994">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143452950">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803145313085">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143835830">
+<meta property="og:image" content="http://img.blog.csdn.net/20160803143913753">
+<meta property="article:published_time" content="2020-10-25T00:50:01.000Z">
+<meta property="article:modified_time" content="2020-12-08T02:02:36.000Z">
+<meta property="article:author" content="刘高兴">
+<meta property="article:tag" content="图像科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160809165935019"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="刘高兴"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="刘高兴"><span class="site-author-status" title="永远相信美好的事情即将发生">😊</span></a><div class="site-author-name"><a href="/about/">刘高兴</a></div><a class="site-name" href="/about/site.html">研路漫漫</a><sub class="site-subtitle">just do it</sub><div class="site-desciption">做难事，必有所得</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">11</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">3</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">6</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="/images/QQ.jpg" title="QQ 群" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="/images/wechat.png" title="微信公众号" target="_blank" style="color:#1AAD19"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-2-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:me@yunyoujun.cn" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/MrLiuWinter" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://weibo.com/5687102559/profile?rightmod=1&amp;wvr=6&amp;mod=personinfo" title="微博" target="_blank" style="color:#E6162D"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-weibo-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=300764227" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/ge-bi-lao-wang-shi-gu-liang" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/94897807" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://travellings.now.sh/" title="Travelling" target="_blank" style="color:var(--hty-text-color)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-send-plane-2-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E9%98%88%E5%80%BC%E5%85%AC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">软阈值公式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E8%BD%AF%E9%98%88%E5%80%BC-Soft-Thresholding-%E5%87%BD%E6%95%B0%E7%9A%84%E7%AC%A6%E5%8F%B7"><span class="toc-number">1.1.</span> <span class="toc-text">1、软阈值(Soft Thresholding)函数的符号</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E8%BD%AF%E9%98%88%E5%80%BC-Soft-Thresholding-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">2、软阈值(Soft Thresholding)函数的作用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E8%BD%AF%E9%98%88%E5%80%BC-Soft-Thresholding-%E7%9A%84%E5%8F%98%E5%BD%A2"><span class="toc-number">3.</span> <span class="toc-text">3、软阈值(Soft Thresholding)的变形</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81%E8%BD%AF%E9%98%88%E5%80%BC-Soft-Thresholding-%E7%9A%84MATLAB%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">4、软阈值(Soft Thresholding)的MATLAB代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81%E8%BD%AF%E9%98%88%E5%80%BC-Soft-Thresholding-%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">5、软阈值(Soft Thresholding)测试代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">7.</span> <span class="toc-text">7、参考文献</span></a></li></ol></div></div></div><div class="tag-cloud"><div class="tag-cloud-tags"><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 12px; color: #999">分享</a> <a href="/tags/%E5%94%90%E8%AF%97/" style="font-size: 30px; color: #0078e7">唐诗</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E7%A7%91%E5%AD%A6/" style="font-size: 12px; color: #999">图像科学</a> <a href="/tags/%E5%AE%8B%E8%AF%8D/" style="font-size: 12px; color: #999">宋词</a> <a href="/tags/%E6%95%A3%E6%96%87/" style="font-size: 12px; color: #999">散文</a> <a href="/tags/%E9%AA%88%E4%BD%93%E6%96%87/" style="font-size: 12px; color: #999">骈体文</a></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://www.mrliuwinter.com/Soft-Thresholding/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="刘高兴"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="研路漫漫"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">软阈值公式</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-10-25 08:50:01" itemprop="dateCreated datePublished" datetime="2020-10-25T08:50:01+08:00">2020-10-25</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2020-12-08 10:02:36" itemprop="dateModified" datetime="2020-12-08T10:02:36+08:00">2020-12-08</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">2.3k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">10m</span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">数学基础</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/%E5%9B%BE%E5%83%8F%E7%A7%91%E5%AD%A6/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">图像科学</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h1 id="软阈值公式"><a href="#软阈值公式" class="headerlink" title="软阈值公式"></a>软阈值公式</h1><p>markdown编辑数学公式：(转载）<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4460692eece4">https://www.jianshu.com/p/4460692eece4</a></p>
+<p>软阈值函数是指Y=X-T,X≥TX+T,X≤-T0,|X|<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B0%8F%E6%B3%A2%E5%8F%98%E6%8D%A2/10334289">小波变换</a>的系数,T是预先选定的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%98%88%E5%80%BC/7442398">阈值</a>。而阈值的量化采用固定阈值法，其定义为:T=σ2log(N)，这里N为<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BF%A1%E5%8F%B7%E9%87%87%E6%A0%B7/5408307">信号采样</a>的数目，σ为噪声的标准偏差。(百度百科)</p>
+<h2 id="1、软阈值-Soft-Thresholding-函数的符号"><a href="#1、软阈值-Soft-Thresholding-函数的符号" class="headerlink" title="1、软阈值(Soft Thresholding)函数的符号"></a>1、软阈值(Soft Thresholding)函数的符号</h2><p>以下是各个文献中的软阈值定义符号：</p>
+<p>​        文献【1】公式（12）：<br>$$<br>\eta_s(w,\lambda)=sgn(w)(|w|-\lambda)_+<br>$$<br>​        文献【2】：<br>$$<br>\eta_t(y)=sgn(y)(|y|-t)_+<br>$$<br>​        文献【3】：<br>$$<br>(S_\alpha(w))_k=sgn(w_k)[|w_k|-\alpha_k]_+<br>$$<br>​        文献【4】公式（8）：<br>$$<br>\widehat{x_i}=soft(z_i,\lambda w_i)=sign(z_i)max{0,|z_i|-\lambda w_i}<br>$$<br>​        文献【5】公式（1.5）：<br>$$<br>\tau_\alpha(x)_i=(|x_i|-\alpha)_+sgn(x_i)<br>$$<br>​        文献【6】公式（12）注释：<br>$$<br>soft(u,a)\equiv sign(u)max{|u|-a,0}<br>$$<br>​        文献【7】：<br>$$<br>soft(x, T)=\begin{cases} x+T，x\leq -T\0 ，|x|\leq T \x-T, x\geq T \end{cases}<br>$$<br>其中文献【1】【2】【3】【5】是第一种，也是最常见的一种；文献【4】【6】是第二种，个人认为可读性比第一种要好；文献【7】是第三种，个人认为可读性最好。当然，它们表达的意思是一样的（<strong>无论是sgn(x)还是sign(x)都是符号函数，即当x&gt;0时为1，当x&lt;0时为-1</strong>）：</p>
+<p>​    以文献【1】符号为例解释第一种表示方式。这里w是变量，λ是阈值(非负值)，符号(|w|-λ)+表示当(|w|-λ)&gt;0时则等于|w|-λ，当(|w|-λ)&lt;0时则等于0。那么分三种情况来讨论：第一种情况是w&gt;λ&gt;0，则sgn(w)=1，|w|=w，(|w|-λ)一定大于0，(|w|-λ)+=|w|-λ，所以ηS(w,λ)=w-λ；第二种情况是w&lt;-λ&lt;0，则sgn(w)=-1，|w|=-w，(|w|-λ)也一定大于0，(|w|-λ)+=|w|-λ，所以ηS(w,λ)=-1*(-w-λ)= w+λ；第三种情况是|w|&lt;λ，此时(|w|-λ)一定小于0，则(|w|-λ)+=0，所以ηS(w,λ)=0。因此</p>
+<p><img src="http://img.blog.csdn.net/20160809165935019" alt="img"></p>
+<p>​    以文献【6】符号为例解释第二种表示方式。这种表示方式中符号max{|u|-a,0}的作用与第一种表示方式中的符号(|w|-λ)+的作用一样，即当(|u|-a)&gt;0时max{|u|-a,0}=(|u|-a)，当(|u|-a)&lt;0时max{|u|-a,0}=0，知道了这一点剩下的分析与第一种表示方式相同。</p>
+<p>​    综上，三种表示方式均是一致的。</p>
+<h1 id="2、软阈值-Soft-Thresholding-函数的作用"><a href="#2、软阈值-Soft-Thresholding-函数的作用" class="headerlink" title="2、软阈值(Soft Thresholding)函数的作用"></a>2、软阈值(Soft Thresholding)函数的作用</h1><p>​    弄清楚了软阈值(Soft Thresholding)的符号表示以后，接下来说一说它的作用。以下内容主要参考了文献【7】，这是一个非常棒的PPT！！！</p>
+<p>​    软阈值(SoftThresholding)可以求解如下优化问题：</p>
+<p><img src="http://img.blog.csdn.net/20160803142929994" alt="img"></p>
+<p>其中：</p>
+<p><img src="http://img.blog.csdn.net/20160803143000495" alt="img"></p>
+<p>​    根据范数的定义，可以将上面优化问题的目标函数拆开：</p>
+<p><img src="http://img.blog.csdn.net/20160803143016510" alt="img"></p>
+<p>​    也就是说，我们可以通过求解N个独立的形如函数</p>
+<p><img src="http://img.blog.csdn.net/20160803143028042" alt="img"></p>
+<p>的优化问题，来求解这个问题。由中学时代学过的求极值方法知道，可以求函数<em>f</em>(<em>x</em>)导数：</p>
+<p><img src="http://img.blog.csdn.net/20160803143048448" alt="img"></p>
+<p>​    这里要解释一下变量x绝对值的导数，当x&gt;0时，|x|=x，因此其导数等于1；当x&lt;0时，|x|=-x，因此其导数等于-1；综合起来，x绝对值的导数等于sgn(x)。令函数<em>f</em>(<em>x</em>)导数等于0，得：</p>
+<p><img src="http://img.blog.csdn.net/20160803143100948" alt="img"></p>
+<p>​    这个结果等号两端都有变量x，需要再化简一下。下面分三种情况讨论：</p>
+<p>(1)当b&gt;λ/2时</p>
+<p>​    假设x&lt;0，则sgn(x)=-1，所以x=b+λ/2&gt;0，与假设x&lt;0矛盾；</p>
+<p>​    假设x&gt;0，则sgn(x)=1，所以x=b-λ/2&gt;0，成立；</p>
+<p>​    所以此时在x=b-λ/2&gt;0处取得极小值：</p>
+<p><img src="http://img.blog.csdn.net/20160803143124933" alt="img"></p>
+<p>​    即此时极小值小于<em>f</em>(0)，而当x&lt;0时</p>
+<p><img src="http://img.blog.csdn.net/20160803143205402" alt="img"></p>
+<p>​    即当x&lt;0时函数*f*(*x*)为单调降函数（对任意△*x*&lt;0，*f*(0)&lt;*f*(△*x*)）。因此，函数在x=b-λ/2&gt;0处取得最小值。</p>
+<p>(2)当b&lt;-λ/2时</p>
+<p>​    假设x&lt;0，则sgn(x)=-1，所以x=b+λ/2&lt;0，成立；</p>
+<p>​    假设x&gt;0，则sgn(x)=1，所以x=b-λ/2&lt;0，与假设x&lt;0矛盾；</p>
+<p>​    所以此时在x=b+λ/2&lt;0处取得极小值：</p>
+<p><img src="http://img.blog.csdn.net/20160803143230652" alt="img"></p>
+<p>​    即此时极小值小于<em>f</em>(0)，而当x&gt;0时</p>
+<p><img src="http://img.blog.csdn.net/20160803143241212" alt="img"></p>
+<p>​    即当x&gt;0时函数<em>f</em>(<em>x</em>)为单调升函数（对任意△<em>x</em>&gt;0，<em>f</em>(△<em>x</em>)&gt;<em>f</em>(0)）。因此，函数在x=b+λ/2&lt;0处取得最小值。</p>
+<p>(3)当-λ/2&lt;b&lt;λ/2时(即|b|&lt;λ/2时)</p>
+<p>​    假设x&lt;0，则sgn(x)=-1，所以x=b+λ/2&gt;0，与假设x&lt;0矛盾；</p>
+<p>​    假设x&gt;0，则sgn(x)=1，所以x=b-λ/2&lt;0，与假设x&lt;0矛盾；</p>
+<p>​    即无论x为大于0还是小于0均没有极值点，那么x=0是否为函数<em>f</em>(<em>x</em>)的极值点呢？</p>
+<p>​    对于△<em>x</em>≠0，</p>
+<p><img src="http://img.blog.csdn.net/20160803143323199" alt="img"></p>
+<p>​    当△<em>x</em> &gt;0时，利用条件b&lt;λ/2可得</p>
+<p><img src="http://img.blog.csdn.net/20160803143336198" alt="img"></p>
+<p>​    当△<em>x</em> &lt;0时，利用条件b&lt;λ/2可得(注：此时|△<em>x</em> |=-△<em>x</em>)</p>
+<p><img src="http://img.blog.csdn.net/20160803143355746" alt="img"></p>
+<p>​    因此，函数在x=0处取得极小值，也是最小值。</p>
+<p>​    综合以上三种情况，<em>f</em>(<em>x</em>)的最小值在以下位置取得：</p>
+<p><img src="http://img.blog.csdn.net/20160803143406042" alt="img"></p>
+<p>​    与前面的软阈值(Soft Thresholding)对比一下，发现了么？若将上式中的b视为变量，λ/2视为阈值，上式即为软阈值(SoftThresholding)的公式。</p>
+<p>​    至此，我们可以得到优化问题</p>
+<p><img src="http://img.blog.csdn.net/20160803142929994" alt="img"></p>
+<p>的解为</p>
+<p><img src="http://img.blog.csdn.net/20160803143439637" alt="img"></p>
+<p>​    注：该式为软阈值(Soft Thresholding)的矩阵形式。</p>
+<h1 id="3、软阈值-Soft-Thresholding-的变形"><a href="#3、软阈值-Soft-Thresholding-的变形" class="headerlink" title="3、软阈值(Soft Thresholding)的变形"></a>3、软阈值(Soft Thresholding)的变形</h1><p>​    当优化问题变为</p>
+<p><img src="http://img.blog.csdn.net/20160803143452950" alt="img"></p>
+<p>​    因为对目标函数乘一个常系数不影响极值点的获得，所以可等价为优化问题</p>
+<p><img src="http://img.blog.csdn.net/20160803143508356" alt="img"></p>
+<p>此时的解为<em>soft</em>(<em>B</em>, <em>λ</em>)。</p>
+<h1 id="4、软阈值-Soft-Thresholding-的MATLAB代码"><a href="#4、软阈值-Soft-Thresholding-的MATLAB代码" class="headerlink" title="4、软阈值(Soft Thresholding)的MATLAB代码"></a>4、软阈值(Soft Thresholding)的MATLAB代码</h1><p>​    软阈值(Soft Thresholding)的函数代码可以写成专门针对优化问题</p>
+<p><img src="http://img.blog.csdn.net/20160803142929994" alt="img"></p>
+<p>​    软阈值(Soft Thresholding)是如此简单以至于可以用一句代码去实现它[8]：</p>
+<p>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<img src="https://images2018.cnblogs.com/blog/389051/201712/389051-20171203171206351-1917148791.png" alt="img"></p>
+<p> 当然，如果不习惯这种形式，也可以写成常见的函数形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function&#96; &#96;[ soft_thresh ] &#x3D; softthresholding( b,lambda ) &#96;&#96;  &#96;&#96;soft_thresh &#x3D; &#96;&#96;sign&#96;&#96;(b).*&#96;&#96;max&#96;&#96;(&#96;&#96;abs&#96;&#96;(b) - lambda&#x2F;2,0); &#96;&#96;end</span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>​    一定要注意：这种写法是针对最开始的优化问题：</p>
+<p><img src="http://img.blog.csdn.net/20160803142929994" alt="img"></p>
+<p>​    但我个人感觉更应该写成这种通用形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function&#96; &#96;[ x ] &#x3D; soft( b,T ) &#96;&#96;  &#96;&#96;x &#x3D; &#96;&#96;sign&#96;&#96;(b).*&#96;&#96;max&#96;&#96;(&#96;&#96;abs&#96;&#96;(b) - T,0); &#96;&#96;end</span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>​    如此之后，若要解决优化问题</p>
+<p><img src="http://img.blog.csdn.net/20160803142929994" alt="img"></p>
+<p>只需调用soft(B, λ/2)即可；若要解决优化问题</p>
+<p><img src="http://img.blog.csdn.net/20160803143452950" alt="img"></p>
+<p>只需调用soft(B, λ)即可。</p>
+<h1 id="5、软阈值-Soft-Thresholding-测试代码"><a href="#5、软阈值-Soft-Thresholding-测试代码" class="headerlink" title="5、软阈值(Soft Thresholding)测试代码"></a>5、软阈值(Soft Thresholding)测试代码</h1><p>​    用以下一小段代码测试一下软阈值，用来求解优化问题：</p>
+<p><img src="http://img.blog.csdn.net/20160803145313085" alt="img"></p>
+<p>这里用的对比函数是基追踪降噪(BPDN_quadprog.m)，参见压缩感知重构算法之基追踪降噪(Basis PursuitDe-Noising, BPDN)（<a target="_blank" rel="noopener" href="http://blog.csdn.net/jbb0523/article/details/52013669%EF%BC%89%EF%BC%8C%E4%BD%BF%E7%94%A8BPDN%E6%97%B6%EF%BC%8C%E5%AE%9E%E9%99%85%E4%B8%8A%E5%B0%B1%E6%98%AF%E8%A7%82%E6%B5%8B%E7%9F%A9%E9%98%B5%E4%B8%BA%E5%8D%95%E4%BD%8D%E9%98%B5%E6%97%B6%E7%9A%84%E4%B8%80%E7%A7%8D%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%EF%BC%9A">http://blog.csdn.net/jbb0523/article/details/52013669），使用BPDN时，实际上就是观测矩阵为单位阵时的一种特殊情况：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear&#96; &#96;all&#96;&#96;;&#96;&#96;close&#96; &#96;all&#96;&#96;;&#96;&#96;clc&#96;&#96;; &#96;&#96;b &#x3D; [-0.8487  -0.3349  0.5528  1.0391  -1.1176]&#39;; &#96;&#96;lambda &#x3D; 1; &#96;&#96;x1&#x3D;soft(b,lambda) &#96;&#96;x2&#x3D;BPDN_quadprog(b,&#96;&#96;eye&#96;&#96;(&#96;&#96;length&#96;&#96;(b)),lambda) &#96;&#96;fprintf&#96;&#96;(&#96;&#96;&#39;\nError between soft and BPDN &#x3D; %f\n&#39;&#96;&#96;,&#96;&#96;norm&#96;&#96;(x1-x2)) </span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>这里就不给出输出结果了。运行后，观察输出结果可知，soft函数与BPDN_quadprog函数的输结果相同。</p>
+<p>​    另外，可以在matlab里输入以下命令看一个软阈值的图像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x&#x3D;-5:0.1:5;T&#x3D;1;y&#x3D;soft(x,T);&#96;&#96;plot&#96;&#96;(x,y);&#96;&#96;grid&#96;&#96;; </span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p><img src="http://img.blog.csdn.net/20160803143835830" alt="img"></p>
+<h1 id="6、总结"><a href="#6、总结" class="headerlink" title="6、总结"></a>6、总结</h1><p>​    可以发现，软阈值解决的优化问题和基追踪降噪问题很像，但并不一样，而且需要格外说明的是，软阈值并能不解决基追踪降噪问题，文献【8】在最后明确说明了这一点：</p>
+<p><img src="http://img.blog.csdn.net/20160803143913753" alt="img"></p>
+<p>​    近来学习研究各种算法，发现给自己挖的坑有点深，有点跳不出来了，各种问题接踵而来，各种新概念一个接着一个，而软阈值(Soft Thresholding)就是其中之一，根本没法子绕过去。在文献【6】中，作者描述软阈值(Soft Thresholding)时用的是“the well-known soft-threshold function”，好吧，还well-kown。在学习过程中文献【9】对我帮助也挺大的，但从作者的语气来看，也没有多么well-kown啊……</p>
+<p>​    最后，非常感谢文献【7】的PPT，看了之后让我有一种醍醐灌顶的感觉……</p>
+<h1 id="7、参考文献"><a href="#7、参考文献" class="headerlink" title="7、参考文献"></a>7、参考文献</h1><p>【1】Donoho D L, JohnstoneJ M. Ideal spatial adaptation by wavelet shrinkage[J]. Biometrika, 1994, 81(3):425-455.</p>
+<p>【2】Donoho D L.De-noising by soft-thresholding[J]. IEEE transactions on information theory,1995, 41(3): 613-627.</p>
+<p>【3】Bredies K, Lorenz D.Iterative soft-thresholding converges linearly[R]. Zentrum fürTechnomathematik, 2007.</p>
+<p>【4】Bioucas-Dias J M,Figueiredo M A T. A new TwIST: two-step iterative shrinkage/thresholdingalgorithms for image restoration[J]. IEEE Transactions on Image processing,2007, 16(12): 2992-3004.</p>
+<p>【5】Beck A, Teboulle M. Afast iterative shrinkage-thresholding algorithm for linear inverse problems[J].SIAM journal on imaging sciences, 2009, 2(1): 183-202.</p>
+<p>【6】Wright S J, Nowak RD, Figueiredo M A T. Sparse reconstruction by separable approximation[J]. IEEETransactions on Signal Processing, 2009, 57(7): 2479-2493.</p>
+<p>【7】谷鹄翔.IteratedSoft-Thresholding Algorithm[Report,slides]. <a target="_blank" rel="noopener" href="http://www.sigvc.org/bbs/thread-41-1-2.html">http://www.sigvc.org/bbs/thread-41-1-2.html</a></p>
+<p>【8】<a target="_blank" rel="noopener" href="http://www.simonlucey.com/soft-thresholding/">http://www.simonlucey.com/soft-thresholding/</a></p>
+<p>【9】<a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_6d0e97bb01015vq3.html">http://blog.sina.com.cn/s/blog_6d0e97bb01015vq3.html</a></p>
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>刘高兴</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://www.mrliuwinter.com/Soft-Thresholding/" title="软阈值公式">http://www.mrliuwinter.com/Soft-Thresholding/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/cuijue/" rel="prev" title="哭李商隐"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">哭李商隐</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/dufu/" rel="next" title="赠卫八处士"><span class="post-nav-text">赠卫八处士</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>点击按钮跳转 GitHub Issues 评论。</span><br><span>若没有本文 Issue，您可以使用 Comment 模版新建。</span><br><a class="hty-button hty-button--raised" id="github-issues" target="_blank" rel="noopener" href="https://github.com/YunYouJun/yunyoujun.github.io/issues?q=is:issue+软阈值公式">GitHub Issues</a></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> 刘高兴</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.3.0</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><div class="aplayer no-destroy" id="aplayer" data-id="885132564" data-server="netease" data-type="playlist" data-fixed="true" data-theme="#0078E7" data-loop="all" data-order="list" data-preload="auto" data-volume="0.7" data-mutex data-lrctype="0" data-listmaxheight="340px" data-storagename="metingjs"></div></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
