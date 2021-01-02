@@ -19,6 +19,7 @@ git remote add origin https://github.com/你的用户名/你的名字.github.io
 git checkout -b hexo #切换分支，所有的提交是在hexo分支下完成的（存放的是源代码）
 git push --set-upstream origin hexo #设置默认提交hexo分支
 
-
 $ git pull origin hexo --allow-unrelated-histories #允许不同历史版本合并
+
+先pull再push同步版本先
 
