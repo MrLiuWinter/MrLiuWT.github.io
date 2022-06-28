@@ -26,3 +26,14 @@ $ git pull origin hexo --allow-unrelated-histories
 
 #允许不同历史版本合并，先pull远程仓库版本，合并之后，再push同步版本
 
+#防止pull覆盖本地仓库
+
+1、先将本地代码放到暂存区
+> git stash
+
+2、将远程github（码云等）上面的代码拉取下来
+> git pull
+
+3、将第一步暂存区的代码放回本地
+> git stash pop
+
